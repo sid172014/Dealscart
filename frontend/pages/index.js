@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Header from "@/components/Header/Header";
 import Slider from "@/components/Slider";
+import Main from "@/components/Main/Main";
 
 
 export default function Home() {
@@ -13,6 +14,8 @@ export default function Home() {
       <div className="pt-2 pb-2 md:pl-14 md:pr-14 pl-12 pr-12 w-full">
         <Slider></Slider>
       </div>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+      <Main></Main>
     </>
   );
 }
