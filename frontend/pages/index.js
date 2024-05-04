@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header/Header";
 import Slider from "@/components/Slider";
 import Main from "@/components/Main/Main";
+import Footer from "@/components/Footer/Footer";
 
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       </div>
       <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
       <Main></Main>
+      <Footer></Footer>
     </>
   );
 }
