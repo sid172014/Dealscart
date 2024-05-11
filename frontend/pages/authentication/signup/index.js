@@ -1,7 +1,22 @@
 import Link from 'next/link';
-import React from 'react'
+import React, { useState } from 'react'
 
 const Signup = () => {
+
+  const [userInfo,setUserInfo] = useState({
+    username : "",
+    email : "",
+    password : ""
+  });
+
+  const handleUserInfoChange = (e) => {
+    e.preventDefault();
+    setUserInfo((prev) => {
+      const newObject  = {...prev,[e.target.name] : e.target.value};
+      return newObject;
+    })
+  };
+
   return (
     <div className='flex items-center justify-center h-[100vh]'>
         <div className='bg-slate-100 border border-gray-100 md:w-[40%] w-full m-5 md:m-10 p-10 flex flex-col items-center justify-center gap-2'>
@@ -14,9 +29,9 @@ const Signup = () => {
           <h1 className='text-2xl font-semibold'>Create your Account</h1>
           <h2 className='md:text-md text-sm font-extralight'>Enter your email and password to create an account</h2>
           <div className='p-2 w-full flex flex-col gap-5'>
-              <input type='text' placeholder="Username" className='w-full p-2 rounded-md'></input>
-              <input type='email' placeholder="Email" className='w-full p-2 rounded-md'></input>
-              <input type='password' placeholder="Password" className='w-full p-2 rounded-md'></input>
+              <input onChange={handleUserInfoChange} name='username' type='text' placeholder="Username" className='w-full p-2 rounded-md'></input>
+              <input onChange={handleUserInfoChange} name='email' type='email' placeholder="Email" className='w-full p-2 rounded-md'></input>
+              <input onChange={handleUserInfoChange} name='password' type='password' placeholder="Password" className='w-full p-2 rounded-md'></input>
               <button className='w-full p-2 rounded-md bg-green-800 text-white font-semibold cursor-pointer'>Create My Account</button>
           </div>
           <div>
