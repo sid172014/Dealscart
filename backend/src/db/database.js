@@ -25,10 +25,16 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateToken = async function(){
     const user = this;
-    user.password = await bcrypt.hash(user.password,10);    
+    
     user.token = jwt.sign({
         _id : user._id.toString()
     }, process.env.JWT_SECRET);
+    return user;
+};
+
+userSchema.methods.encryptPassowrd = async function(){
+    const user = this;
+    user.password = await bcrypt.hash(user.password,10);    
     return user;
 }
 
