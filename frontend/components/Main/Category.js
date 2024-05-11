@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
 
+
 const Category = () => {
 
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
+            try{
+
             const response = await axios.get('https://dummyjson.com/products/categories');
 
             // Important concept
@@ -32,6 +35,9 @@ const Category = () => {
                 }
             }));
             setCategories(items);
+            }catch(e){
+            console.log(e);
+            }
         };
         getData();
     }, []);

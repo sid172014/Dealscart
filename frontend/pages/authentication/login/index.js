@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import React, { useState } from 'react'
 import axios from 'axios';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
+import { useRouter } from 'next/router';
+
 
 // In order to use and set cookies for authentication we have to use this
 axios.defaults.withCredentials = true;
 
 const Login = () => {
+
+  const router = useRouter();
 
   const [userInfo,setUserInfo] = useState({
     email : "",
@@ -20,6 +26,20 @@ const Login = () => {
     });
   };
 
+  const handleLoginSubmit = async () => {
+    try{
+      const response = await axios.post('http://localhost:3000/users/login', userInfo);
+      console.log(response.data);
+      if(response.data.message){
+        toast.success(response.data.message);
+        setTimeout(() => {
+          router.push('/');
+        },2000);
+      }
+    }catch(e){
+      toast.error(e.response.data.error);
+    }
+  }; 
   
 
   return (
@@ -33,10 +53,11 @@ const Login = () => {
           </div>
           <h1 className='text-2xl font-semibold'>Login to your Account</h1>
           <h2 className='md:text-md text-sm font-extralight'>Enter your email and password to create an account</h2>
+          <Toaster richColors theme="light"></Toaster>
           <div className='p-2 w-full flex flex-col gap-5'>
               <input onChange={handleUserInfoChange} name='email' type='email' placeholder="Email" className='w-full p-2 rounded-md'></input>
               <input onChange={handleUserInfoChange} name='password' type='password' placeholder="Password" className='w-full p-2 rounded-md'></input>
-              <button  className='w-full p-2 rounded-md bg-green-800 text-white font-semibold cursor-pointer'>Login</button>
+              <button onClick={handleLoginSubmit} className='w-full p-2 rounded-md bg-green-800 text-white font-semibold cursor-pointer'>Login</button>
           </div>
           <div>
             <span>Don't have an Account ? </span>

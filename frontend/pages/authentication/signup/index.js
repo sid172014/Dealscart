@@ -23,7 +23,7 @@ const Signup = () => {
     });
   };
 
-  const handleSubmitButton = async () => {
+  const handleSubmitButton = async () => { 
     const response = await axios.post('http://localhost:3000/users/signup', userInfo);  
     console.log(response.data);
     toast.success("Successfully Registered User!");
