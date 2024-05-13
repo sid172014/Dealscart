@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const router = new express.Router();
 
 const { users } = require('../db/database');
+const authMiddleware = require('../middleware/auth');
 
 // User Signup Router
 router.post('/users/signup', async (req, res) => {
@@ -55,6 +56,16 @@ router.post('/users/login', async (req, res) => {
     } catch (e) {
         res.status(404).json({
             error: e.message
+        });
+    }
+});
+
+router.post('/users/addToCart', authMiddleware,async (req,res) => {
+    try{
+        res.send("Passed the test");
+    }catch(e){
+        res.status(500).json({
+            error : e.message
         });
     }
 })

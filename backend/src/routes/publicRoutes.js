@@ -25,7 +25,7 @@ router.get('/discounted', async(req,res) => {
         const allProds = response.data.products.sort((a,b) => b.discountPercentage - a.discountPercentage);
         res.send(allProds);
     }catch(e){
-        res.stauts(400).send(e.message);
+        res.status(400).send(e.message);
     }
 })
 

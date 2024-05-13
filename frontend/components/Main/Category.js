@@ -6,13 +6,14 @@ import Link from 'next/link';
 const Category = () => {
 
     const [categories, setCategories] = useState([]);
+    const [loading,setLoading] = useState(false);
 
     useEffect(() => {
         const getData = async () => {
             try{
-
             const response = await axios.get('https://dummyjson.com/products/categories');
 
+            console.log(response.data);
             // Important concept
             const items = await Promise.all(response.data.map(async (item) => {
                 const res = await axios.get(`https://dummyjson.com/products/category/${item}`);
@@ -35,12 +36,13 @@ const Category = () => {
                 }
             }));
             setCategories(items);
+            setLoading(true);
             }catch(e){
             console.log(e);
             }
         };
         getData();
-    }, []);
+    },[]);
 
     return (
         <>
