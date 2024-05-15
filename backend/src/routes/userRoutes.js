@@ -68,6 +68,7 @@ router.post('/users/addToCart', authMiddleware,async (req,res) => {
             error : e.message
         });
     }
-})
+});
+
 
 module.exports = router;
