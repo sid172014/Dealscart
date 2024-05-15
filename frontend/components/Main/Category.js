@@ -12,7 +12,6 @@ const Category = () => {
             try{
             const response = await axios.get('https://dummyjson.com/products/categories');
 
-            console.log(response.data);
             // Important concept
             const items = await Promise.all(response.data.map(async (item) => {
                 const res = await axios.get(`https://dummyjson.com/products/category/${item}`);
@@ -36,7 +35,7 @@ const Category = () => {
             }));
             setCategories(items);
             }catch(e){
-            console.log(e);
+                console.log(e);
             }
         };
         getData();
