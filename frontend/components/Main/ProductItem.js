@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import { Toaster } from '../ui/sonner';
 import axios from 'axios';
+import { LoginStatusContext } from '../context/LoginStatusContext';
 
 const ProductItem = ({ product }) => {
 
     const [quantity, setQuantity] = useState(1);
-
     const addToCart = async () => {
+        
         try{
+            
             console.log("Clicked");
             const object = {
                 id : product.id,
@@ -24,6 +26,7 @@ const ProductItem = ({ product }) => {
     };
 
     useEffect(() => {
+
         console.log(product);
     }, []);
     return (
