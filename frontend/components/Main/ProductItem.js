@@ -9,8 +9,14 @@ const ProductItem = ({ product }) => {
 
     const addToCart = async () => {
         try{
-            const response = await axios.post('http://localhost:3000/users/addToCart'); 
-            
+            console.log("Clicked");
+            const object = {
+                id : product.id,
+                quantity : quantity,
+                price : product.price
+            };
+            const response = await axios.post('http://localhost:3000/users/addToCart', object); 
+            toast.success(response.data.message);
         }catch(e){
             toast.error(e.response.data.error);
         }
@@ -54,6 +60,7 @@ const ProductItem = ({ product }) => {
                             <h1 className='text-3xl text-black font-extrabold'>= ₹{product.price * quantity.toFixed(2)}</h1>
                         </div>
                     </div>
+                    <Toaster position='top-center' richColors theme='light'></Toaster>
                     <div className='max-sm:items-center max-sm:justify-center max-sm:flex'>
                         <button onClick={addToCart} className='flex items-center gap-2 bg-green-500 p-3 rounded-lg'>
                             <div className='flex items-baseline'>

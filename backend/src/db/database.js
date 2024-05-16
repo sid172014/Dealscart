@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const e = require('express');
 mongoose.connect(process.env.MONGODB_URL);
 
 const userSchema = new mongoose.Schema({
@@ -17,6 +18,20 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    cart : [{
+        id : { 
+            type : Number,
+            required : true
+        },
+        quantity : {
+            type : Number,
+            required : true
+        },
+        price : {
+            type : Number,
+            required : true
+        }
+    }],
     token : {
         type : String,
         required : true
