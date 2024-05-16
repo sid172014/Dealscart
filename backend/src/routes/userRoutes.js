@@ -62,7 +62,18 @@ router.post('/users/login', async (req, res) => {
 
 router.post('/users/addToCart', authMiddleware,async (req,res) => {
     try{
-        res.send("Passed the test");
+        const addToCart = await users.findByIdAndUpdate(req.user._id,{
+            $push : {
+                cart : {
+                    id : req.body.id,
+                    quantity : req.body.quantity,
+                    price : req.body.price
+                }
+            }
+        });
+        res.json({
+            message : "Item added to Cart"
+        });
     }catch(e){
         res.status(500).json({
             error : e.message
