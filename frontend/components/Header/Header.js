@@ -1,12 +1,27 @@
 import { Subscript } from 'lucide-react';
 import Link from 'next/link';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { LoginStatusContext } from '../context/LoginStatusContext';
+import axios from 'axios';
+import { DetailsContext } from '../context/DetailsContext';
+import { CartItems } from '../context/CartItems';
 
 const Header = () => {
 
-    const { loggedIn, setLoggedIn } = useContext(LoginStatusContext);
-    console.log(loggedIn);
+    const { loggedIn, setLoggedIn } = useContext(LoginStatusContext);   
+    const { userProfile,setUserProfile } = useContext(DetailsContext);
+    const {updateCart,setUpdateCart} = useContext(CartItems);
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = await axios.get('http://localhost:3000/users/details');
+            setUserProfile(response.data);
+        };
+        if(loggedIn){
+            getData();
+        }
+    }, [loggedIn,updateCart]);
+
     return (
         <div className='flex items-center justify-between p-6 shadow-lg'>
             <div className='flex gap-1'>
@@ -29,7 +44,7 @@ const Header = () => {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                     </svg>
                     <h2 className='text-xl text-white bg-green-400 rounded-xl pl-1 pr-1'>
-                        2
+                        {userProfile == undefined ? 0 : userProfile.cart.length}
                     </h2>
                 </div> : <>
                     <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/login'}>Login</Link></button>

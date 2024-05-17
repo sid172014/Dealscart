@@ -3,32 +3,30 @@ import { toast } from 'sonner';
 import { Toaster } from '../ui/sonner';
 import axios from 'axios';
 import { LoginStatusContext } from '../context/LoginStatusContext';
+import { CartItems } from '../context/CartItems';
 
 const ProductItem = ({ product }) => {
 
     const [quantity, setQuantity] = useState(1);
+    const {loggedIn,setLoggedIn} = useContext(LoginStatusContext); 
+    const {updateCart,setUpdateCart} = useContext(CartItems);
+
     const addToCart = async () => {
-        
         try{
-            
             console.log("Clicked");
             const object = {
                 id : product.id,
                 quantity : quantity,
                 price : product.price
             };
-            const response = await axios.post('http://localhost:3000/users/addToCart', object); 
+            const response = await axios.post('http://localhost:3000/users/addToCart', object);
+            setUpdateCart(!updateCart);
             toast.success(response.data.message);
         }catch(e){
             toast.error(e.response.data.error);
         }
     
     };
-
-    useEffect(() => {
-
-        console.log(product);
-    }, []);
     return (
         <div className='grid md:grid-cols-2 grid-cols-1'>
             <div className='col-span-1 p-2'>
