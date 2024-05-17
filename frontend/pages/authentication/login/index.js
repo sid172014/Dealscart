@@ -1,16 +1,17 @@
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import { useRouter } from 'next/router';
+import { LoginStatusContext } from '@/components/context/LoginStatusContext';
 
 
 // In order to use and set cookies for authentication we have to use this
 axios.defaults.withCredentials = true;
 
 const Login = () => {
-
+  const {loggedIn,setLoggedIn} = useContext(LoginStatusContext);
   const router = useRouter();
 
   const [userInfo,setUserInfo] = useState({
@@ -32,6 +33,7 @@ const Login = () => {
       console.log(response.data);
       if(response.data.message){
         toast.success(response.data.message);
+        setLoggedIn(!loggedIn);
         setTimeout(() => {
           router.push('/');
         },2000);

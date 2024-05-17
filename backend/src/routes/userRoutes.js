@@ -60,6 +60,16 @@ router.post('/users/login', async (req, res) => {
     }
 });
 
+
+router.get('/users/details', authMiddleware, async(req,res) => {
+    try{
+        res.send(req.user);
+    }catch(e){
+        res.status(500).send(e.message);
+    }
+})
+
+
 router.post('/users/addToCart', authMiddleware,async (req,res) => {
     try{
         const addToCart = await users.findByIdAndUpdate(req.user._id,{
