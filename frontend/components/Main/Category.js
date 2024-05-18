@@ -10,30 +10,32 @@ const Category = () => {
     useEffect(() => {   
         const getData = async () => {
             try{
-            const response = await axios.get('https://dummyjson.com/products/categories');
+            // const response = await axios.get('https://dummyjson.com/products/categories');
 
-            // Important concept
-            const items = await Promise.all(response.data.map(async (item) => {
-                const res = await axios.get(`https://dummyjson.com/products/category/${item}`);
-                if (res.data) {
-                    if (item === "motorcycle") {
-                        return {
-                            item: item,
-                            photo: res.data.products[1].thumbnail
-                        };
-                    }else{
-                        return {
-                            item: item,
-                            photo: res.data.products[0].thumbnail
-                        };
-                    }
-                    return {
-                        item: item,
-                        photo: res.data.products[0].thumbnail
-                    };
-                }
-            }));
-            setCategories(items);
+            // // Important concept
+            // const items = await Promise.all(response.data.map(async (item) => {
+            //     const res = await axios.get(`https://dummyjson.com/products/category/${item}`);
+            //     if (res.data) {
+            //         if (item === "motorcycle") {
+            //             return {
+            //                 item: item,
+            //                 photo: res.data.products[1].thumbnail
+            //             };
+            //         }else{
+            //             return {
+            //                 item: item,
+            //                 photo: res.data.products[0].thumbnail
+            //             };
+            //         }
+            //         return {
+            //             item: item,
+            //             photo: res.data.products[0].thumbnail
+            //         };
+            //     }
+            // }));
+
+            const response = await axios.get('http://localhost:3000/categories');
+            setCategories(response.data);
             }catch(e){
                 console.log(e);
             }
