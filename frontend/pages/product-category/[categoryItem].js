@@ -11,7 +11,7 @@ const categoryItem = () => {
     const [products,setProducts] = useState([]);
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get(`https://dummyjson.com/products/category/${router.query.categoryItem}`);
+            const response = await axios.get(`http://localhost:3000/categoryItems/${router.query.categoryItem}`);
             if(response.data.products.length > 0){
                 setProducts(response.data.products)  
             };

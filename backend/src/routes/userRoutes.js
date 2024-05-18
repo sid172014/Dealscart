@@ -4,6 +4,7 @@ const router = new express.Router();
 
 const { users } = require('../db/database');
 const authMiddleware = require('../middleware/auth');
+const { default: axios } = require('axios');
 
 // User Signup Router
 router.post('/users/signup', async (req, res) => {
@@ -91,5 +92,22 @@ router.post('/users/addToCart', authMiddleware,async (req,res) => {
     }
 });
 
+router.get('/users/cartItems',authMiddleware,async(req,res) => {
+    try{
+
+        const items = await Promise.all(req.user.cart.map(async (item) => {   
+            const response = await axios.get(`https://dummyjson.com/products/${item.id}`)
+            if(response.data){
+                return {
+                    ...response.data,
+                    quantity : item.quantity
+                }
+            };
+        }));
+        res.send(items);
+    }catch(e){
+        res.status(500).send(e.message);
+    }
+})
 
 module.exports = router;

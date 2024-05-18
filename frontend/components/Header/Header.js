@@ -5,22 +5,32 @@ import { LoginStatusContext } from '../context/LoginStatusContext';
 import axios from 'axios';
 import { DetailsContext } from '../context/DetailsContext';
 import { CartItems } from '../context/CartItems';
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import CartItemList from '../Main/CartItemList';
+
 
 const Header = () => {
 
-    const { loggedIn, setLoggedIn } = useContext(LoginStatusContext);   
-    const { userProfile,setUserProfile } = useContext(DetailsContext);
-    const {updateCart,setUpdateCart} = useContext(CartItems);
+    const { loggedIn, setLoggedIn } = useContext(LoginStatusContext);
+    const { userProfile, setUserProfile } = useContext(DetailsContext);
+    const { updateCart, setUpdateCart } = useContext(CartItems);
 
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get('http://localhost:3000/users/details');
             setUserProfile(response.data);
         };
-        if(loggedIn){
+        if (loggedIn) {
             getData();
         }
-    }, [loggedIn,updateCart]);
+    }, [loggedIn, updateCart]);
 
     return (
         <div className='flex items-center justify-between p-6 shadow-lg'>
@@ -39,16 +49,28 @@ const Header = () => {
                 </div>
             </div>
             <div className='flex gap-4 '>
-                {loggedIn === true ? <div  className='flex cursor-pointer items-center rounded-full p-1'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-8 h-8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
-                    <h2 className='text-xl text-white bg-green-400 rounded-xl pl-1 pr-1'>
-                        {userProfile == undefined ? 0 : userProfile.cart.length}
-                    </h2>
-                </div> : <>
-                    <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/login'}>Login</Link></button>
-                    <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/signup'}>Signup</Link></button>
+                {loggedIn === true ?
+                    <Sheet>
+                        <SheetTrigger><div className='flex cursor-pointer items-center rounded-full p-1'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-8 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            </svg>
+                            <h2 className='text-xl text-white bg-green-400 rounded-xl pl-1 pr-1'>
+                                {userProfile == undefined ? 0 : userProfile.cart.length}
+                            </h2></div> </SheetTrigger>
+                        <SheetContent>
+                            <SheetHeader>
+                                <SheetTitle className='text-2xl w-full p-2 text-center bg-green-800 text-white font-semibold rounded-xl'>My Cart</SheetTitle>
+                                <SheetDescription>
+                                    <CartItemList></CartItemList>
+                                </SheetDescription>
+                            </SheetHeader>
+                        </SheetContent>
+                    </Sheet>
+
+                    : <>
+                        <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/login'}>Login</Link></button>
+                        <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/signup'}>Signup</Link></button>
                     </>
                 }
 
