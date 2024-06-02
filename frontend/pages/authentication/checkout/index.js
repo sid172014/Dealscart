@@ -1,7 +1,34 @@
 import Header from '@/components/Header/Header';
-import React from 'react'
+import { LoginStatusContext } from '@/components/context/LoginStatusContext';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react'
 
 const Checkout = () => {
+
+    const [subtotal,setSubtotal] = useState(0); 
+    const [total,setTotal] = useState(0);
+    const router = useRouter();
+    const {loggedIn,setLoggedIn} = useContext(LoginStatusContext);
+    useEffect(() => {
+        if(!loggedIn){
+            router.push('/');
+            return;
+        };
+        const getSubTotal = async () => {
+            const response = await axios.get('http://localhost:3000/users/details');
+            if(response.data.cart.length > 0){
+                console.log(response.data.cart);
+                let localTotal = 0;
+                response.data.cart.forEach((item) => {
+                 localTotal = localTotal + (item.quantity * item.price);
+                });
+                setSubtotal(localTotal);
+                setTotal(localTotal+(localTotal*0.9)+15);
+            }
+        };
+        getSubTotal();
+    }, []);
   return (
     <>
         <Header></Header>
@@ -25,14 +52,14 @@ const Checkout = () => {
             </div>
             <div className='col-span-12 md:col-span-4'>
                 <div className='p-4 md:m-5 border border-slate-200'>
-                    <h1 className='bg-gray-200 font-extrabold p-4 text-center text-2xl'>Total Cart $250</h1>
+                    <h1 className='bg-gray-200 font-extrabold p-4 text-center text-2xl'>Total Cart ₹{total.toFixed(2)}</h1>
                     <div className='flex flex-col gap-4 p-2'>
-                        <div className='flex justify-between font-extrabold'>Subtotal : <span>$100</span></div>
+                        <div className='flex justify-between font-extrabold'>Subtotal : <span>₹{subtotal.toFixed(2)}</span></div>
                         <hr></hr>
-                        <div className='flex justify-between font-semibold'>Tax(9%) : <span>9%</span></div>
-                        <div className='flex justify-between font-semibold'>Delivery : <span>$10</span></div>
+                        <div className='flex justify-between font-semibold'>Tax(9%) : <span>₹{(subtotal*0.9).toFixed(2)}</span></div>
+                        <div className='flex justify-between font-semibold'>Delivery : <span>₹15.00</span></div>
                         <hr></hr>
-                        <div className='flex justify-between font-extrabold'>Total : <span>$250</span></div>
+                        <div className='flex justify-between font-extrabold'>Total : <span>₹{total.toFixed(2)}</span></div>
                         <hr></hr>
                         <button className='bg-green-800 rounded-lg text-white font-bold p-2'>Pay</button>
                     </div>
