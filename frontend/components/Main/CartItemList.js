@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 const CartItemList = () => {
 
   const [items, setItems] = useState([]);
+  const [changed,setChanged] = useState(false);
   let total = 0;
 
   useEffect(() => {
@@ -15,13 +16,24 @@ const CartItemList = () => {
       setItems(response.data);
     }
     getProducts();
-  }, []);
+  }, [changed]);
+
+  const deleteFromCart = async (itemId) => {
+    try{
+      const response = await axios.delete(`http://localhost:3000/users/${itemId}`);
+      console.log(response.data);
+      setChanged(!changed);
+    }catch(e){
+      console.log(e.message);
+    }
+  }
+
   return (
     <>
-    <div className='flex flex-col gap-2'>{items.length > 0 ? items.map((item) => {
+    <div className='h-[550px] overflow-auto flex flex-col gap-2'>{items.length > 0 ? items.map((item) => {
       total = total + (item.price * item.quantity);
       return (
-        <div className='p-3 flex items-center  gap-2 w-full bg-slate-200 rounded-xl'>
+        <div className='p-3 flex items-center justify-between gap-2 w-full bg-slate-200 rounded-xl'>
           <div>
             <img src={item.thumbnail} className='border-2 border-white md:h-[150px] md:w-[100px] h-[100px] w-[100px] rounded-md'></img>
           </div>
@@ -31,7 +43,7 @@ const CartItemList = () => {
             <h2 className='text-green-800 font-semibold '>Quantity : {item.quantity}</h2>
             <h2 className='text-green-800 font-semibold '>Price : ₹{item.quantity * item.price}</h2>
           </div>
-          <TrashIcon color='black' fill='white'></TrashIcon>
+          <TrashIcon className='cursor-pointer hover:fill-black' onClick={() => deleteFromCart(item.id)} color='black' fill='white'></TrashIcon>
         </div>
       );
     }) : null}</div>
