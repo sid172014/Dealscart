@@ -1,4 +1,4 @@
-import { Subscript } from 'lucide-react';
+import { Rss, Subscript } from 'lucide-react';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react'
 import { LoginStatusContext } from '../context/LoginStatusContext';
@@ -7,6 +7,7 @@ import { DetailsContext } from '../context/DetailsContext';
 import { CartItems } from '../context/CartItems';
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
     SheetHeader,
@@ -21,6 +22,8 @@ const Header = () => {
     const { loggedIn, setLoggedIn } = useContext(LoginStatusContext);
     const { userProfile, setUserProfile } = useContext(DetailsContext);
     const { updateCart, setUpdateCart } = useContext(CartItems);
+
+    const [total,setTotal] = useState(0);
 
     useEffect(() => {
         const getData = async () => {
@@ -67,7 +70,6 @@ const Header = () => {
                             </SheetHeader>
                         </SheetContent>
                     </Sheet>
-
                     : <>
                         <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/login'}>Login</Link></button>
                         <button className='text-white border rounded-full pt-2 pb-2 pl-4 pr-4 bg-green-400'><Link href={'/authentication/signup'}>Signup</Link></button>
