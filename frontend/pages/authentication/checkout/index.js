@@ -24,11 +24,13 @@ const Checkout = () => {
                  localTotal = localTotal + (item.quantity * item.price);
                 });
                 setSubtotal(localTotal);
-                setTotal(localTotal+(localTotal*0.9)+15);
+                setTotal(localTotal+(localTotal - localTotal*0.9)+15);
             }
         };
         getSubTotal();
     }, []);
+
+    
   return (
     <>
         <Header></Header>
@@ -56,7 +58,7 @@ const Checkout = () => {
                     <div className='flex flex-col gap-4 p-2'>
                         <div className='flex justify-between font-extrabold'>Subtotal : <span>₹{subtotal.toFixed(2)}</span></div>
                         <hr></hr>
-                        <div className='flex justify-between font-semibold'>Tax(9%) : <span>₹{(subtotal*0.9).toFixed(2)}</span></div>
+                        <div className='flex justify-between font-semibold'>Tax(9%) : <span>₹{(subtotal-(subtotal*0.9)).toFixed(2)}</span></div>
                         <div className='flex justify-between font-semibold'>Delivery : <span>₹15.00</span></div>
                         <hr></hr>
                         <div className='flex justify-between font-extrabold'>Total : <span>₹{total.toFixed(2)}</span></div>
