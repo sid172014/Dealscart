@@ -108,6 +108,27 @@ router.get('/users/cartItems',authMiddleware,async(req,res) => {
     }catch(e){
         res.status(500).send(e.message);
     }
+});
+
+router.delete('/users/:itemId', authMiddleware,async(req,res) => {
+    try{   
+        // Creating a temporary list for the new filtered items
+        const newList = req.user.cart.filter((item) => {
+            return item.id != req.params.itemId
+        });
+
+        // Actually updating the database after deleting or removing the item that the user doesn't want in the cart
+        await users.findByIdAndUpdate(req.user._id, {
+            cart : newList
+        });
+        res.json({
+            message : "Item removed from Cart"
+        });
+    }catch(e){
+        res.status(404).json({
+            error : e.message
+        });
+    }
 })
 
 module.exports = router;
