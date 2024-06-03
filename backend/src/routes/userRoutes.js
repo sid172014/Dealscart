@@ -17,7 +17,8 @@ router.post('/users/signup', async (req, res) => {
         res.cookie('token', user.token, {
             path: '/',
             httpOnly: true,
-            sameSite: "lax"
+            sameSite: "lax",
+            secure : true
         });
         res.status(201).send(user);
     } catch (e) {
