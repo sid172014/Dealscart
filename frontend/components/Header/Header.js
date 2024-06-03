@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet"
 import CartItemList from '../Main/CartItemList';
 
+axios.defaults.withCredentials = true;
 
 const Header = () => {
 
@@ -28,9 +29,7 @@ const Header = () => {
     useEffect(() => {
         const getData = async () => {
             try{
-            const response = await axios.get('https://dealscart.onrender.com/users/details',{
-                withCredentials : true
-            });
+            const response = await axios.get('https://dealscart.onrender.com/users/details');
             setUserProfile(response.data);
         }catch(e){
             console.log(e);
