@@ -16,7 +16,7 @@ const Checkout = () => {
             return;
         };
         const getSubTotal = async () => {
-            const response = await axios.get('http://localhost:3000/users/details');
+            const response = await axios.get('https://dealscart.onrender.com/users/details');
             if(response.data.cart.length > 0){
                 console.log(response.data.cart);
                 let localTotal = 0;

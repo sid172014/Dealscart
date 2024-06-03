@@ -24,7 +24,7 @@ const Signup = () => {
   };
 
   const handleSubmitButton = async () => { 
-    const response = await axios.post('http://localhost:3000/users/signup', userInfo);  
+    const response = await axios.post('https://dealscart.onrender.com/users/signup', userInfo);  
     console.log(response.data);
     toast.success("Successfully Registered User!");
   }

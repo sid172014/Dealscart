@@ -34,7 +34,7 @@ const Category = () => {
             //     }
             // }));
 
-            const response = await axios.get('http://localhost:3000/categories');
+            const response = await axios.get('https://dealscart.onrender.com/categories');
             setCategories(response.data);
             }catch(e){
                 console.log(e);

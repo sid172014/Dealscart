@@ -14,11 +14,15 @@ const Slider = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get('http://localhost:3000/slidebar');
+            try{
+            const response = await axios.get('https://dealscart.onrender.com/slidebar');
             const elements = response.data.map((item) => {
                 return item;
             });
             setData(elements);
+        }catch(e){
+            console.log(e);
+        }
         };
         getData();
     }, []);
