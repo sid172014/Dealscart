@@ -18,7 +18,6 @@ router.post('/users/signup', async (req, res) => {
             path: '/',
             httpOnly: true,
             sameSite: "lax",
-            secure : true
         });
         res.status(201).send(user);
     } catch (e) {
