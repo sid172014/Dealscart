@@ -5,7 +5,7 @@ const app = express();
 require('dotenv').config();
 
 const corsOptions = {
-    origin : "https://dealscart.onrender.com",  // Changed to backend url
+    origin : "http://localhost:3000",
     credentials : true
 }
 
