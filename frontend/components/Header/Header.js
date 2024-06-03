@@ -29,7 +29,9 @@ const Header = () => {
     useEffect(() => {
         const getData = async () => {
             try{
-            const response = await axios.get('https://dealscart.onrender.com/users/details');
+            const response = await axios.get('https://dealscart.onrender.com/users/details',{
+                withCredentials : true
+            });
             setUserProfile(response.data);
         }catch(e){
             console.log(e);
