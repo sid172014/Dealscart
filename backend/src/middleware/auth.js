@@ -4,6 +4,7 @@ const { users } = require('../db/database');
 const authMiddleware = async (req,res,next) => {
     try{
         const token = req.cookies.token;
+        console.log("Token ", token);
         if(token == undefined){
             throw new Error("Not Authenticated to use the Cart, Please Sign In!");
         }

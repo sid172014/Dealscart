@@ -27,8 +27,16 @@ const Header = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get('https://dealscart.onrender.com/users/details');
+            try{
+
+            
+            const response = await axios.get('https://dealscart.onrender.com/users/details',{
+                withCredentials : true
+            });
             setUserProfile(response.data);
+        }catch(e){
+            console.log(e);
+        }
         };
         if (loggedIn) {
             getData();
