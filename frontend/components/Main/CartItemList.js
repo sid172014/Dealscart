@@ -17,7 +17,7 @@ const CartItemList = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await axios.get('http://localhost:3000/users/cartItems');
+      const response = await axios.get('https://dealscart.onrender.com/users/cartItems');
       setItems(response.data);
     }
     getProducts();
@@ -25,7 +25,7 @@ const CartItemList = () => {
 
   const deleteFromCart = async (itemId) => {
     try{
-      const response = await axios.delete(`http://localhost:3000/users/${itemId}`);
+      const response = await axios.delete(`https://dealscart.onrender.com/users/${itemId}`);
       console.log(response.data);
       setChanged(!changed);
       toast.success("Item removed from Cart!");

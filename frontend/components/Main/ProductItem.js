@@ -19,7 +19,7 @@ const ProductItem = ({ product }) => {
                 quantity : quantity,
                 price : product.price
             };
-            const response = await axios.post('http://localhost:3000/users/addToCart', object);
+            const response = await axios.post('https://dealscart.onrender.com/users/addToCart', object);
             setUpdateCart(!updateCart);
             toast.success(response.data.message);
         }catch(e){

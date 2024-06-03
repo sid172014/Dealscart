@@ -8,7 +8,7 @@ const TopSelling = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get('http://localhost:3000/discounted');   
+            const response = await axios.get('https://dealscart.onrender.com/discounted');   
             const items = [];
             for(let i=0;i<20;i++){
                 items.push(response.data[i]);

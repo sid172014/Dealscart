@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleLoginSubmit = async () => {
     try{
-      const response = await axios.post('http://localhost:3000/users/login', userInfo);
+      const response = await axios.post('https://dealscart.onrender.com/users/login', userInfo);
       console.log(response.data);
       if(response.data.message){
         toast.success(response.data.message);
